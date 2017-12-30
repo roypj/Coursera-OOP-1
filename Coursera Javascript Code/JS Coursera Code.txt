@@ -1,0 +1,153 @@
+/*// write your code here
+var a = 3;
+var b = 4;
+var c = 2*a+3*b;
+print(b);
+print(c);
+print(a+b+c);
+print(a.toString()+' '+b.toString()+' '+c.toString())
+
+var image = new SimpleImage("smallhands.png")
+//print(image)
+var wid = image.getWidth()
+print(wid)
+var len = image.getHeight()
+print(len)
+print(image.getPixel(0,0))
+
+function square(x){
+    var ans = x*x;
+    return ans;
+}
+
+print(square(9))
+
+function cube(x){
+    var ans = x*x*x;
+    return ans;
+}
+
+print(cube(8))
+x= 6
+print(x +' cubed is '+cube(x))
+
+function sum3(a,b,c){
+    return a+b+c;
+}
+print(sum3(1,2,3))
+function cct(a,b){return a.toString()+b.toString();}
+print(cct('a','b'))
+
+function imgDim(fn){
+    print(fn);
+    var img = new SimpleImage(fn);
+    var len = img.getHeight()
+    var wid = img.getWidth()
+    return(len+' '+wid)
+}
+print(imgDim("chapel.png"))
+
+var img = new SimpleImage(200,200)
+print(img)
+wid = img.getWidth();
+len = img.getHeight();
+var pixs= img.values()
+for (var p of pixs){
+    p.setRed(255);
+    p.setGreen(255);
+    p.setBlue(0);
+    
+}
+print(img)
+
+for (var p of img.values()){
+    p.setRed(255);
+    p.setGreen(0);
+    p.setBlue(255);
+}
+print(img)
+
+
+function stripes(filenm){
+    var img = new SimpleImage(filenm);
+    for(var p of img.values()){
+        if(p.getX()<img.getWidth()/3){p.setRed(255);}
+        if(p.getX()>img.getWidth()/3 && p.getX()<img.getWidth()*(2.0/3.0)){p.setGreen(255);}
+        if(p.getX()>img.getWidth()*(2/3)){p.setBlue(255)}
+    }
+    print(img)
+}
+
+stripes("rodger.png")
+
+
+function swapredgreen(filenm){
+    var img = new SimpleImage(filenm);
+    for (var p of img.values()){
+        var redval = p.getRed();
+        var grnval = p.getGreen();
+        p.setRed(grnval);
+        p.setGreen(redval);
+    }
+    print(img)
+}
+swapredgreen("smallhands.png")
+
+convertYellow("duke_blue_devil.png")
+function convertYellow(filenm){
+    var img = new SimpleImage(filenm)
+    print(img)
+    for(p of img.values()){
+        if (p.getBlue()!=255&&p.getGreen()!=255&&p.getRed()!=255){
+        p.setRed(255);
+        p.setGreen(255);
+        p.setBlue(0);
+        }
+    }
+    print(img)
+}
+
+
+print(greenScreen("drewRobert.png","dinos.png"))
+function greenScreen(fgnm,bgnm){
+   var fgImg = new SimpleImage(fgnm);
+   var bgImg = new SimpleImage(bgnm);
+   
+   var opImg = new SimpleImage(fgImg.getWidth(),fgImg.getHeight())
+   for(var pix of fgImg.values()){
+       if(pix.getGreen()>(pix.getRed()+pix.getBlue())){
+           var x = pix.getX();
+           var y = pix.getY();
+           opImg.setPixel(x,y,bgImg.getPixel(x,y));
+           
+       }else{
+           var x = pix.getX();
+           var y = pix.getY();
+           opImg.setPixel(x,y,pix);
+       }
+   }
+   return opImg ;
+}
+
+*/
+function addBorder(flnm,brdr){
+    var img = new SimpleImage(flnm);
+    var ht = img.getHeight();
+    var wd = img.getWidth();
+    for (var p of img.values()){
+        var x = p.getX();
+        var y = p.getY();
+        if(x<10 || x>wd-brdr){
+            p.setRed(0);
+            p.setGreen(0);
+            p.setBlue(0);
+        }
+         if(y<10 || y>ht-brdr){
+            p.setRed(0);
+            p.setGreen(0);
+            p.setBlue(0);
+        }
+    }
+    return img
+}
+print(addBorder("smallpanda.png",10))

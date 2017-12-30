@@ -1,0 +1,6 @@
+#BlueJ class context
+comment0.params=flnm
+comment0.target=edu.duke.ImageResource\ makeGrey(edu.duke.ImageResource)
+comment1.params=
+comment1.target=void\ testgrey()
+numComments=2

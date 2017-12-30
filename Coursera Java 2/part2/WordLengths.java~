@@ -1,0 +1,121 @@
+
+/**
+ * Write a description of WordLengths here.
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
+import edu.duke.*;
+public class WordLengths {
+    
+    public int[] countWords(FileResource fr, int counts[]){
+        for(String word : fr.words()){
+            int len = word.length();
+            if(!Character.isLetter(word.charAt(0))&&!Character.isLetter(word.charAt(len-1))){
+                len=len-2;
+            }else{
+                if(!Character.isLetter(word.charAt(0))||!Character.isLetter(word.charAt(len-1))){
+                len=len-1;
+                }
+            }
+            if(len>0){
+            if(len>30){
+                counts[31]+=1;
+            }else{
+                counts[len]+=1;
+            }
+        }
+        }
+    return counts;
+    }
+    public int maxIdx(int counts[]){
+        int maxIdx =0;
+        int max =0;
+        for(int k=0;k<counts.length;k++){
+            if(counts[k]>max){
+                max=counts[k];
+                maxIdx =k;
+            }
+        }
+        return maxIdx;
+    }
+    public String halfOfString(String message, int start){
+        StringBuilder halfString = new StringBuilder();
+        StringBuilder sb = new StringBuilder(message);
+        for(int k=start;k<sb.length();k+=2){
+           
+                halfString.append(sb.charAt(k));
+            
+        }
+        return halfString.toString();
+    }
+    public int maxCountAlphabet(String message){
+        String alphabet = "abcdefghijklmnopqrstuvwxyz";
+        int[]counts = new int[26];
+        
+        for(int k=0;k<message.length();k++){
+            int idx = alphabet.indexOf(Character.toLowerCase(message.charAt(k)));
+            if(idx!=-1){
+                counts[idx]+=1;
+            }           
+        
+        }
+        //for(int k=0;k<counts.length;k++){
+        //System.out.println(alphabet.charAt(k)+"\t"+counts[k]);
+        //}
+        int maxIdx =0;
+        int max=0;
+        for(int i=0;i<counts.length;i++){
+            if(counts[i]>max){
+                maxIdx=i;
+                max=counts[i];
+            }
+        }
+    return maxIdx;
+    }
+    public String decryptMultiKey(String encrypted){
+        CaesarCipher cc = new CaesarCipher();
+        String half1 = halfOfString(encrypted,0);
+        String half2 = halfOfString(encrypted,1);
+        int maxDex1 = maxCountAlphabet(half1);
+        int maxDex2 = maxCountAlphabet(half2);
+        int dkey1 = maxDex1 -4;
+        if(maxDex1<4){
+            dkey1 = 26 - (4-maxDex1);
+        }
+        int dkey2 = maxDex2 -4;
+        if(maxDex2<4){
+            dkey2 = 26 - (4-maxDex2);
+        }
+        System.out.println(dkey1+","+dkey2);
+        return cc.encryptTwoKeys(encrypted,26-dkey1,26-dkey2);
+    }
+    public void testCountWords(){
+        FileResource fr = new FileResource();
+        int[] counts = new int[31];
+        counts = countWords(fr,counts);
+        for(int k=1;k<counts.length;k++){
+            if(counts[k]!=0){
+            System.out.println(counts[k]+" words of length "+k);
+         }
+        }
+        System.out.println("max index is "+maxIdx(counts));
+    }
+    public void testHalfstring(){
+        System.out.println(halfOfString("Qbkm Zgis",0));
+        System.out.println(halfOfString("Qbkm Zgis",1));
+    }
+    
+    public void testDecryptMulti(){
+        //FileResource fr = new FileResource();
+        //String message = fr.asString();
+       String message = "Aal uttx hm aal Qtct Fhljha pl Wbdl. Pvxvxlx!";
+        //String message = "At noon beeeeeee in the confeeereeence room with your hat on for a surpriseeeee party. YELL LOUD!";
+        //CaesarCipher cc = new CaesarCipher();
+        //String ecrmulti = cc.encryptTwoKeys(message,8,21);
+        System.out.println(decryptMultiKey(message));
+        System.out.println(maxCountAlphabet(message));
+    }
+
+
+}

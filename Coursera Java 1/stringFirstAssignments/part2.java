@@ -1,0 +1,31 @@
+
+/**
+ * Write a description of part2 here.
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
+public class part2 {
+    public String findSimpleGene(String dna,String startcdn,String endcdn){
+        int startidx = dna.toUpperCase().indexOf(startcdn.toUpperCase());
+        if (startidx==-1){return "";}
+        int endidx = dna.toUpperCase().indexOf(endcdn.toUpperCase(),startidx+3);
+        if(endidx==-1){return "";}
+        String dnastr = dna.substring(startidx,endidx+3);
+        return dnastr;  
+    
+    }
+    public void testDna(){
+    String result = findSimpleGene("AATGCGTAATATGGT","ATG","TAA");
+    System.out.println("dna is AATGCGTAATATGGT");
+    System.out.println("the dna is"+result);
+    String result1 = findSimpleGene("ACGTAATATTGT","ATG","TAA");
+    System.out.println(result1);
+    String result2 = findSimpleGene("AATGCGTATGGT","ATG","TAA");
+    System.out.println(result2);
+    String result3 = findSimpleGene("aatgcgtaa","ATG","TAA");
+    System.out.println(result3);
+    }
+
+}
+

@@ -1,0 +1,30 @@
+
+/**
+ * Write a description of part1 here.
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
+public class part1 {
+    public String findSimpleGene(String dna){
+        int startidx = dna.indexOf("ATG");
+        if (startidx==-1){return "";}
+        int endidx = dna.indexOf("TAA",startidx+3);
+        if(endidx==-1){return "";}
+        String dnastr = dna.substring(startidx,endidx+3);
+        return dnastr;  
+    
+    }
+    public void testDna(){
+    String result = findSimpleGene("AATGCGTAATATGGT");
+    System.out.println("dna is AATGCGTAATATGGT");
+    System.out.println("the dna is"+result);
+    String result = findSimpleGene("ACGTAATATTGT");
+    System.out.println(result);
+    String result = findSimpleGene("AATGCGTATGGT");
+    System.out.println(result);
+    String result = findSimpleGene("AATGCGATGTAATATGGT");
+    System.out.println(result);
+    }
+
+}

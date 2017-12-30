@@ -1,0 +1,12 @@
+#BlueJ class context
+comment0.params=input\ key
+comment0.target=java.lang.String\ encrypt(java.lang.String,\ int)
+comment1.params=ch\ key
+comment1.target=char\ getEncryptedChar(char,\ int)
+comment2.params=message\ key1\ key2
+comment2.target=java.lang.String\ encryptTwoKeys(java.lang.String,\ int,\ int)
+comment3.params=
+comment3.target=void\ testEcrypt()
+comment4.params=
+comment4.target=void\ testMultiKey()
+numComments=5

@@ -1,0 +1,18 @@
+#BlueJ class context
+comment0.params=fr\ counts
+comment0.target=int[]\ countWords(edu.duke.FileResource,\ int[])
+comment1.params=counts
+comment1.target=int\ maxIdx(int[])
+comment2.params=message\ start
+comment2.target=java.lang.String\ halfOfString(java.lang.String,\ int)
+comment3.params=message
+comment3.target=int\ maxCountAlphabet(java.lang.String)
+comment4.params=encrypted
+comment4.target=java.lang.String\ decryptMultiKey(java.lang.String)
+comment5.params=
+comment5.target=void\ testCountWords()
+comment6.params=
+comment6.target=void\ testHalfstring()
+comment7.params=
+comment7.target=void\ testDecryptMulti()
+numComments=8

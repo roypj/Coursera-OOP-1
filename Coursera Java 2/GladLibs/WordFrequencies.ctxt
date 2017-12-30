@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.params=
+comment0.target=WordFrequencies()
+comment1.params=
+comment1.target=void\ findUnique()
+comment2.params=myFreqs
+comment2.target=int\ findIndexOfMax(java.util.ArrayList)
+comment3.params=
+comment3.target=void\ testUnique()
+numComments=4

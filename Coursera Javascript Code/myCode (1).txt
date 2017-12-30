@@ -1,0 +1,82 @@
+//var hide = new SimpleImage("skyline.jpg");
+//var container = new SimpleImage("usain.jpg");
+//first zero out last four bits of container image
+//that is make the container ready to accept the code
+/*function makeSpace(flnm){
+    var flnm = new SimpleImage(flnm);
+    for(var px of flnm.values()){
+        px.setRed(Math.floor(px.getRed()/16)*16);
+        px.setGreen(Math.floor(px.getGreen()/16)*16);
+        px.setBlue(Math.floor(px.getBlue()/16)*16);
+    }
+    return(flnm);
+}
+//print(makeSpace("usain.jpg"))
+//get most significant digits of each pixel from the image you need to hide
+function codify(flnm){
+    var flnm = new SimpleImage(flnm);
+    for(var px of flnm.values()){
+        px.setRed(Math.floor(px.getRed()/16));
+        px.setGreen(Math.floor(px.getGreen()/16));
+        px.setBlue(Math.floor(px.getBlue()/16));
+    }
+    return flnm;
+}
+
+function combine(container,hidden){
+    for(var px of container.values()){
+        var x = px.getX();
+        var y = px.getY();
+        var hidPx = hidden.getPixel(x,y);
+        px.setRed(px.getRed()+hidPx.getRed());
+        px.setGreen(px.getGreen()+hidPx.getGreen());
+        px.setBlue(px.getBlue()+hidPx.getBlue());
+    }
+    return container;
+}
+
+function retrieve(codedImg){
+    for( var px of codedImg.values()){
+        px.setRed(Math.floor(px.getRed()%16)*16);
+        px.setGreen(Math.floor(px.getGreen()%16)*16);
+        px.setBlue(Math.floor(px.getBlue()%16)*16);
+    }
+    return codedImg;
+    
+}
+
+var container = makeSpace("usain.jpg");
+var hidden = codify("skyline.jpg");
+//print(combine(container,hidden))
+var codedImg = combine(container, hidden);
+var retrievedimg = retrieve(codedImg);
+//print(retrievedimg)
+var orig = new SimpleImage("skyline.jpg")
+//print(orig)*/
+
+function crop(image,width,height){
+    var crpImg = new SimpleImage(width,height);
+    var imgHt = image.getHeight();
+    //print(imgHt)
+    var imgWd = image.getWidth();
+    /*print(imgWd);
+    print((imgWd-width)/2);
+    print(imgWd-(imgWd-width)/2);
+    print((imgHt-height)/2);
+    print(imgHt-(imgHt-height)/2)*/
+    var i=0;
+    for(var px of image.values()){
+        var x = px.getX();
+        var y = px.getY();
+        if((x>(imgWd-width)/2)&&(x<imgWd-(imgWd-width)/2)){
+            if((y>(imgHt-height)/2)&&(y<(imgHt-(imgHt-height)/2))){
+                crpImg.setPixel((x-(imgWd-width)/2),(y-(imgHt-height)/2),px)
+            }
+        }
+    }
+    return crpImg;
+}
+var image = new SimpleImage("astrachan.jpg");
+ var crp=crop(image,200,300)
+ print(image)
+ print(crp)

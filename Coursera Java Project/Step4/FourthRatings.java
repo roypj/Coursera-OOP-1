@@ -1,0 +1,148 @@
+
+/**
+ * Write a description of FourthRatings here.
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
+import java.util.*;
+public class FourthRatings {
+   
+    
+  private double getAverageByID(String movie, int minimalRaters){
+        double rating = 0;
+        int numRaters = 0;
+        ArrayList<Rater> raterList = RaterDatabase.getRaters();
+        for (int k = 0 ; k< raterList.size() ; k++){
+            Rater currRater = raterList.get(k);
+            double currRating = currRater.getRating(movie);
+            if(currRating!=-1){
+                rating+=currRating;
+                numRaters+=1;
+            }
+        }
+        if(numRaters>=minimalRaters){
+            return rating/numRaters;
+        }
+        return 0.0;
+    }
+    
+    public ArrayList<Rating>  getAverageRatings(int minimalRaters){
+        ArrayList<String> movieList = MovieDatabase.filterBy(new TrueFilter());
+        ArrayList<Rating> avgRatings = new ArrayList<Rating>();
+        for(int i = 0 ; i<movieList.size();i++){
+            String movie = movieList.get(i);
+            double avgRating = getAverageByID(movie,minimalRaters);
+            if(avgRating >0){
+                Rating currRating = new Rating(movie, avgRating);
+                avgRatings.add(currRating);
+            }
+        }
+        return avgRatings;
+    }
+    
+    public ArrayList<Rating> getAverageRatingsByFilter(int minimalRaters, Filter filterCriteria){
+        ArrayList<String> movieList = MovieDatabase.filterBy(filterCriteria);
+        ArrayList<Rating> avgRatings = new ArrayList<Rating>();
+        for(int i = 0 ; i<movieList.size();i++){
+            String movie = movieList.get(i);
+            double avgRating = getAverageByID(movie,minimalRaters);
+            if(avgRating >0){
+                Rating currRating = new Rating(movie, avgRating);
+                avgRatings.add(currRating);
+            }
+        }
+        return avgRatings;
+    }
+    
+    private double dotProduct(Rater me , Rater r){
+        double dotProd = 0 ;
+        ArrayList<String> movieList = null;
+        int meRated = me.numRatings();
+        int rRated = r.numRatings();
+        if(meRated>=rRated){
+            movieList = r.getItemsRated();
+        }else{
+            movieList = me.getItemsRated();
+        }
+        for(String mov : movieList){
+            if(me.hasRating(mov)&&r.hasRating(mov)){
+                dotProd+=(me.getRating(mov)-5)*(r.getRating(mov)-5);
+            }
+        }
+       return dotProd; 
+    }
+    
+    private ArrayList<Rating> getSimilarities(String id){
+        ArrayList<Rating>  similarRaters = new ArrayList<Rating>();
+        Rater me = RaterDatabase.getRater(id);
+        ArrayList<Rater> raterList = RaterDatabase.getRaters();
+        for(Rater r : raterList){
+            if(!me.getID().equals(r.getID())){
+                double dotProd = dotProduct(me,r);
+                if(dotProd>0){
+                    similarRaters.add(new Rating(r.getID(),dotProd));
+                }
+            }
+        }
+        Collections.sort(similarRaters,Collections.reverseOrder());
+        return similarRaters;
+    }
+    
+    public ArrayList<Rating> getSimilarRatings(String id, int numSimilarRaters, int minimalRaters){
+        ArrayList<Rating> similarRaters = getSimilarities(id);
+        ArrayList<Rating> movieWtRatings = new ArrayList<Rating>();
+        if(numSimilarRaters > similarRaters.size()){
+            numSimilarRaters = similarRaters.size();
+        }
+        /*get movie list*/
+        ArrayList<String> movieList = MovieDatabase.filterBy(new TrueFilter());
+        for(String mov : movieList){
+           double weightedRating = 0;
+           int numRaters = 0;
+            for(int i = 0 ; i<numSimilarRaters;i++){
+                Rating currSimId = similarRaters.get(i);
+                Rater currSimRater = RaterDatabase.getRater(currSimId.getItem());
+                double currSimRating = currSimRater.getRating(mov);
+                if(currSimRating!=-1){
+                    weightedRating+=currSimRating*currSimId.getValue();
+                    numRaters+=1;
+                }
+            } 
+            if(numRaters >= minimalRaters){
+                movieWtRatings.add(new Rating(mov,weightedRating/numRaters));
+            }
+        }
+        Collections.sort(movieWtRatings,Collections.reverseOrder());
+        return movieWtRatings;    
+    }
+    
+    public ArrayList<Rating> getSimilarRatingsByFilter(String id, int numSimilarRaters, int minimalRaters,Filter filterCriteria){
+        ArrayList<Rating> similarRaters = getSimilarities(id);
+        ArrayList<Rating> movieWtRatings = new ArrayList<Rating>();
+        if(numSimilarRaters > similarRaters.size()){
+            numSimilarRaters = similarRaters.size();
+        }
+        /*get movie list*/
+        ArrayList<String> movieList = MovieDatabase.filterBy(filterCriteria);
+        for(String mov : movieList){
+           double weightedRating = 0;
+           int numRaters = 0;
+            for(int i = 0 ; i<numSimilarRaters;i++){
+                Rating currSimId = similarRaters.get(i);
+                Rater currSimRater = RaterDatabase.getRater(currSimId.getItem());
+                double currSimRating = currSimRater.getRating(mov);
+                if(currSimRating!=-1){
+                    weightedRating+=currSimRating*currSimId.getValue();
+                    numRaters+=1;
+                }
+            } 
+            if(numRaters >= minimalRaters){
+                movieWtRatings.add(new Rating(mov,weightedRating/numRaters));
+            }
+        }
+        Collections.sort(movieWtRatings,Collections.reverseOrder());
+        return movieWtRatings;    
+    }
+
+}

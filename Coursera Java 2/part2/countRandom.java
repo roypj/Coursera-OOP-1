@@ -1,0 +1,29 @@
+
+/**
+ * Write a description of countRandom here.
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
+import edu.duke.*;
+import java.util.*;
+public class countRandom {
+    
+    public void simulateDice(){
+        Random rd = new Random();
+        int[] counts = new int[13];
+        for(int k=0;k<1000;k++){
+            int d1 = rd.nextInt(6)+1;
+            int d2 = rd.nextInt(6)+1;
+            counts[d1+d2]+=1;
+        
+        }
+        for(int i=2;i<13;i++){
+            System.out.println("Count of "+i+"\t"+"= "+counts[i]);
+        }
+        
+    
+    
+    }
+
+}

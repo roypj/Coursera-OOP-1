@@ -1,0 +1,82 @@
+
+/**
+ * Write a description of CharactersInPlay here.
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
+import edu.duke.*;
+import java.util.*;
+public class CharactersInPlay {
+    private ArrayList<String> charNames;
+    private ArrayList<Integer> diagols;
+    
+    public CharactersInPlay(){
+        charNames = new ArrayList<String>();
+        diagols = new ArrayList<Integer>();
+    }
+    
+    public void update(String name){
+        int idx = charNames.indexOf(name);
+        if(idx==-1){
+            charNames.add(name);
+            diagols.add(1);
+        }else{
+            int count = diagols.get(idx);
+            diagols.set(idx,count+1);
+        }        
+    }
+    
+    public void findAllCharacters(){
+        FileResource fr = new FileResource();
+        String charName=null;
+        for(String line :  fr.lines()){
+            int endIdx = line.indexOf(".");
+            if(endIdx!=-1){
+                charName = line.substring(0,endIdx);
+                update(charName);
+            }
+           }
+    }
+    
+    public void charactersWithNumparts(int n1, int n2){
+        for(int k=0;k<diagols.size();k++){
+            int parts = diagols.get(k);
+            if(parts>=n1 && parts <=n2){
+                System.out.println(charNames.get(k)+"\t"+diagols.get(k));
+            }
+        }
+    }
+    
+//     public int findIndexOfMax(ArrayList<Integer> myFreqs){
+//         int maxIdx =0;
+//         int max =0;
+//         for(int i=0;i<myFreqs.size();i++){
+//             if(myFreqs.get(i)>max){
+//                 max = myFreqs.get(i);
+//                 maxIdx = i;
+//             }
+//         }
+//         return maxIdx;
+//     }
+//     
+    public void testFindChars(){
+        findAllCharacters();
+        
+        for(int k=0;k<diagols.size();k++){
+            System.out.println(charNames.get(k)+"\t"+diagols.get(k));
+        }
+        
+    }
+    
+    public void testCharParts(){
+        findAllCharacters();
+        WordFrequencies wf = new WordFrequencies();
+        //int maxIdx = wf.findIndexOfMax(diagols);
+        //int n2 = diagols.get(maxIdx);
+        int n2 =15;
+        int n1 = 10;
+        charactersWithNumparts(n1,n2);
+    }
+
+}

@@ -1,0 +1,25 @@
+//var hide = new SimpleImage("skyline.jpg");
+//var container = new SimpleImage("usain.jpg");
+//first zero out last four bits of container image
+//that is make the container ready to accept the code
+function makeSpace(flnm){
+    var flnm = new SimpleImage(flnm);
+    for(var px of flnm.values()){
+        px.setRed(Math.floor(px.getRed()/16)*16);
+        px.setGreen(Math.floor(px.getGreen()/16)*16);
+        px.setBlue(Math.floor(px.getBlue()/16)*16);
+    }
+    return(flnm);
+}
+//print(makeSpace("usain.jpg"))
+//get most significant digits of each pixel from the image you need to hide
+function codify(flnm){
+    var flnm = new SimpleImage(flnm);
+    for(var px of flnm.values()){
+        px.setRed(Math.floor(px.getRed()/16));
+        px.setGreen(Math.floor(px.getGreen()/16));
+        px.setBlue(Math.floor(px.getBlue()/16));
+    }
+    return flnm;
+}
+print(codify("skyline.jpg"))

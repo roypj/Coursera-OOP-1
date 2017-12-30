@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.params=message
+comment0.target=int\ maxCountAlphabet(java.lang.String)
+comment1.params=encrypted
+comment1.target=java.lang.String\ decrypt(java.lang.String)
+comment2.params=
+comment2.target=void\ testDecrypt()
+comment3.params=
+comment3.target=void\ testmaxCntAlph()
+numComments=4
